@@ -25,8 +25,10 @@ export const ListDocuments = () => {
   return (
     <div className="flex flex-col gap-3">
       {documents && documents.length > 0 ? (
-        documents.map(({ title }, index) => (
-          <Document key={index}>{title} </Document>
+        documents.map((document) => (
+          <Document data={document} key={document.id}>
+            {document.title}
+          </Document>
         ))
       ) : (
         <Document>Список пуст</Document>

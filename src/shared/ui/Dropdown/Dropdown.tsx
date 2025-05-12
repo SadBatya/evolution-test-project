@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import checkIcon from "./assets/check.svg";
 import Image from "next/image";
+import { IDocumentType } from "@/shared/types";
+import { TypeDocument } from "@/shared/ui";
 
 interface Props {
   value: number;
   onChange: (val: number) => void;
 }
 
-type IDocument = "Регламент" | "Инструкция" | "Распоряжение";
-
-const variantDocuments: IDocument[] = [
+const variantDocuments: IDocumentType[] = [
   "Регламент",
   "Инструкция",
   "Распоряжение",
@@ -19,13 +19,13 @@ const variantDocuments: IDocument[] = [
 
 export const Dropdown = ({ value, onChange }: Props) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [typeDocument, setTypeDocument] = useState<IDocument>("Регламент");
+  const [typeDocument, setTypeDocument] = useState<IDocumentType>("Регламент");
 
   useEffect(() => {
     setTypeDocument(variantDocuments[value - 1]);
   }, [value]);
 
-  const handleChooseType = (type: IDocument) => {
+  const handleChooseType = (type: IDocumentType) => {
     setTypeDocument(type);
     onChange(variantDocuments.indexOf(type) + 1);
     setOpenModal(false);
@@ -37,17 +37,7 @@ export const Dropdown = ({ value, onChange }: Props) => {
         onClick={() => setOpenModal(!openModal)}
         className="cursor-pointer transition-all w-full hover:bg-[#F5F5F5] p-2 rounded-sm"
       >
-        <div
-          className={twMerge(
-            "text-[#175CD3] w-fit text-xs bg-[#EFF8FF] border border-[#B2DDFF] rounded-sm px-2",
-            typeDocument === "Инструкция" &&
-              "text-[#17D36F] bg-[#EFFFF1] border-[#CAFED8]",
-            typeDocument === "Распоряжение" &&
-              "text-[#B42318] border-[#FECDCA] bg-[#FEF3F2]"
-          )}
-        >
-          {typeDocument}
-        </div>
+        <TypeDocument type={typeDocument} />
       </div>
       <ul
         className={twMerge(

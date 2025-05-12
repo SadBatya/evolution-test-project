@@ -1,5 +1,5 @@
 "use client";
-import { Modal } from "@/widgets/Modal/Modal";
+import { CreatDocumentModal } from "@/widgets/CreatDocumentModal/CreatDocumentModal";
 import dataFlowIcon from "./assets/dataflow.svg";
 import statusIcon from "./assets/status.svg";
 import descriptionIcon from "./assets/description.svg";
@@ -8,16 +8,11 @@ import { Dropdown } from "@/shared/ui";
 import { Button } from "@/shared/ui";
 import { Controller, useForm } from "react-hook-form";
 import { useCreateItemMutation, useGetItemsQuery } from "../store/apiSlice";
-import { generateNumericId } from "@/shared/ui/utils/generateNumericId";
+import { generateNumericId } from "@/shared/utils/generateNumericId";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
-
-interface IFormValues {
-  id: number;
-  title: string;
-  type: number;
-  description: string;
-}
+import { IDocument } from "@/shared/types";
+import { hiddenBackdrop } from "../store/backdropSlice";
 
 export const CreateDocument = () => {
   const uniqueId = generateNumericId();
@@ -31,7 +26,7 @@ export const CreateDocument = () => {
     formState: { isValid },
     control,
     reset,
-  } = useForm<IFormValues>({
+  } = useForm<IDocument>({
     mode: "onChange",
     defaultValues: {
       title: "",
@@ -40,7 +35,7 @@ export const CreateDocument = () => {
     },
   });
 
-  const onSubmit = async (data: IFormValues) => {
+  const onSubmit = async (data: IDocument) => {
     try {
       const { title, type, description } = data;
 
@@ -56,6 +51,7 @@ export const CreateDocument = () => {
         reset();
         setTimeout(() => {
           dispatch(closeModal());
+          dispatch(hiddenBackdrop());
         }, 1000);
       }
     } catch (error) {
@@ -64,7 +60,7 @@ export const CreateDocument = () => {
   };
 
   return (
-    <Modal>
+    <CreatDocumentModal>
       <div className="flex border-b-[1px] border-[#E9EAEB] py-5 px-4 gap-1.5 text-[14px] items-center">
         <Image src={dataFlowIcon} alt="create document icon" />
         <span>Документы</span>
@@ -116,6 +112,6 @@ export const CreateDocument = () => {
           </Button>
         </div>
       </form>
-    </Modal>
+    </CreatDocumentModal>
   );
 };

@@ -7,7 +7,11 @@ import { RootState } from "@/entities/store/store";
 import closeIcon from "./assets/close.svg";
 import Image from "next/image";
 
-export const Modal = ({ children }: { children: string | ReactNode }) => {
+export const CreatDocumentModal = ({
+  children,
+}: {
+  children: string | ReactNode;
+}) => {
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
   const dispatch = useDispatch();
 
