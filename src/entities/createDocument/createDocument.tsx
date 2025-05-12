@@ -7,6 +7,10 @@ import Image from "next/image";
 import { Dropdown } from "@/shared/ui";
 import { Button } from "@/shared/ui";
 import { Controller, useForm } from "react-hook-form";
+import { useCreateItemMutation, useGetItemsQuery } from "../store/apiSlice";
+import { generateNumericId } from "@/shared/ui/utils/generateNumericId";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../store/modalSlice";
 
 interface IFormValues {
   id: number;
@@ -16,11 +20,17 @@ interface IFormValues {
 }
 
 export const CreateDocument = () => {
+  const uniqueId = generateNumericId();
+  const [createItem, { isLoading, isSuccess }] = useCreateItemMutation();
+  const { refetch } = useGetItemsQuery();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
     control,
+    reset,
   } = useForm<IFormValues>({
     mode: "onChange",
     defaultValues: {
@@ -30,8 +40,27 @@ export const CreateDocument = () => {
     },
   });
 
-  const onSubmit = (data: IFormValues) => {
-    console.log("Form values", data);
+  const onSubmit = async (data: IFormValues) => {
+    try {
+      const { title, type, description } = data;
+
+      await createItem({
+        title,
+        description,
+        type,
+        id: uniqueId,
+      });
+
+      if (isSuccess) {
+        refetch();
+        reset();
+        setTimeout(() => {
+          dispatch(closeModal());
+        }, 1000);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -69,7 +98,7 @@ export const CreateDocument = () => {
               Описание
             </label>
             <textarea
-              {...register("description", { required: "Введите название" })}
+              {...register("description", { required: "Введите описание" })}
               className="border border-[#D5D7DA] min-h-[108px] w-full rounded-sm resize-none px-3 py-2"
             ></textarea>
           </div>
@@ -78,7 +107,11 @@ export const CreateDocument = () => {
           style={{ boxShadow: "0 -2px 16px 0px rgba(97, 97, 97, 0.05)" }}
           className="mt-auto border-t border-[#EAECF0] shadow-md mb-0 py-4 px-6 flex justify-end"
         >
-          <Button disabled={!isValid} className="text-white px-4 py-2">
+          <Button
+            loading={isLoading}
+            disabled={!isValid || isLoading}
+            className="text-white px-4 py-2"
+          >
             Создать
           </Button>
         </div>

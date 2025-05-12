@@ -23,9 +23,12 @@ export const apiSlice = createApi({
     getItems: builder.query<IDocument[], void>({
       query: () => "documents",
     }),
-    createItem: builder.mutation<IDocument, { name: string }>({
+    createItem: builder.mutation<
+      IDocument,
+      { title: string; description: string; type: number; id: number }
+    >({
       query: (body) => ({
-        url: "items",
+        url: "documents",
         method: "POST",
         body,
       }),

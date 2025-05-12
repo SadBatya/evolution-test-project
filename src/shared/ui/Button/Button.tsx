@@ -5,9 +5,16 @@ interface Props {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
+  loading?: boolean;
 }
 
-export const Button = ({ children, onClick, className, disabled }: Props) => (
+export const Button = ({
+  children,
+  onClick,
+  className,
+  disabled,
+  loading,
+}: Props) => (
   <button
     disabled={disabled}
     className={twMerge(
@@ -17,6 +24,10 @@ export const Button = ({ children, onClick, className, disabled }: Props) => (
     )}
     onClick={onClick}
   >
-    {children}
+    {loading ? (
+      <div className="w-4 h-4 border-2 border-t-2 border-blue-500 my-0.5 mx-6 border-solid rounded-full border-r-transparent animate-spin" />
+    ) : (
+      children
+    )}
   </button>
 );
