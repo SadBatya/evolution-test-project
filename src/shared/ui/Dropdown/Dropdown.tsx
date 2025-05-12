@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import checkIcon from "./assets/check.svg";
 import Image from "next/image";
 
 interface Props {
-  value?: number;
-  setValue?: () => void;
+  value: number;
+  onChange: (val: number) => void;
 }
 
 type IDocument = "Регламент" | "Инструкция" | "Распоряжение";
@@ -17,14 +17,20 @@ const variantDocuments: IDocument[] = [
   "Распоряжение",
 ];
 
-export const Dropdown = ({ value, setValue }: Props) => {
+export const Dropdown = ({ value, onChange }: Props) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [typeDocument, setTypeDocument] = useState<IDocument>("Регламент");
 
+  useEffect(() => {
+    setTypeDocument(variantDocuments[value - 1]);
+  }, [value]);
+
   const handleChooseType = (type: IDocument) => {
     setTypeDocument(type);
+    onChange(variantDocuments.indexOf(type) + 1);
     setOpenModal(false);
   };
+
   return (
     <div className="relative w-full">
       <div
