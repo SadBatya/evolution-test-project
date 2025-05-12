@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { GetDocumentModal } from "@/widgets/getDocumentModal/getDocumentModal";
+import { GetDocumentModal } from "@/widgets";
 import { IDocument } from "@/shared/types";
 import { useDispatch } from "react-redux";
 import {
