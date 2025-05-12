@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { GetDocumentModal } from "@/widgets";
-import { IDocument } from "@/shared/types";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
+import { GetDocumentModal } from '@/widgets';
+import { IDocument } from '@/shared/types';
+import { useDispatch } from 'react-redux';
 import {
   hiddenBackdrop,
   visibleBackdrop,
-} from "@/entities/store/backdropSlice";
+} from '@/entities/store/backdropSlice';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { RootState } from '@/entities/store/store';
 
 interface Props {
   data?: IDocument;
@@ -17,6 +20,13 @@ interface Props {
 export const Document = ({ children, data }: Props) => {
   const [openModal, setIsOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const isVisible = useSelector((state: RootState) => state.backdrop.isVisible);
+
+  useEffect(() => {
+    if (isVisible === false) {
+      setIsOpenModal(false);
+    }
+  }, [isVisible]);
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
