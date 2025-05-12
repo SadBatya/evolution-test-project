@@ -24,6 +24,7 @@ export const GetDocumentModal = ({ data, isOpen, onClick }: Props) => (
     <form className="flex flex-col text-black justify-between">
       <div className="p-6">
         <input
+          readOnly
           defaultValue={data?.title}
           type="text"
           className="text-2xl w-full mb-3 font-semibold placeholder-[#D5D7DA]"
