@@ -1,5 +1,5 @@
 "use client";
-import { CreatDocumentModal } from "@/widgets/CreatDocumentModal/CreatDocumentModal";
+import { Modal } from "@/shared/ui";
 import dataFlowIcon from "./assets/dataflow.svg";
 import statusIcon from "./assets/status.svg";
 import descriptionIcon from "./assets/description.svg";
@@ -9,12 +9,15 @@ import { Button } from "@/shared/ui";
 import { Controller, useForm } from "react-hook-form";
 import { useCreateItemMutation, useGetItemsQuery } from "../store/apiSlice";
 import { generateNumericId } from "@/shared/utils/generateNumericId";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../store/modalSlice";
 import { IDocument } from "@/shared/types";
 import { hiddenBackdrop } from "../store/backdropSlice";
+import { RootState } from "@/entities/store/store";
 
 export const CreateDocument = () => {
+  const isOpen = useSelector((state: RootState) => state.modal.isOpen);
+
   const uniqueId = generateNumericId();
   const [createItem, { isLoading, isSuccess }] = useCreateItemMutation();
   const { refetch } = useGetItemsQuery();
@@ -50,8 +53,7 @@ export const CreateDocument = () => {
         refetch();
         reset();
         setTimeout(() => {
-          dispatch(closeModal());
-          dispatch(hiddenBackdrop());
+          handleCloseModal();
         }, 1000);
       }
     } catch (error) {
@@ -59,8 +61,13 @@ export const CreateDocument = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+    dispatch(hiddenBackdrop());
+  };
+
   return (
-    <CreatDocumentModal>
+    <Modal isOpen={isOpen} onClick={handleCloseModal}>
       <div className="flex border-b-[1px] border-[#E9EAEB] py-5 px-4 gap-1.5 text-[14px] items-center">
         <Image src={dataFlowIcon} alt="create document icon" />
         <span>Документы</span>
@@ -112,6 +119,6 @@ export const CreateDocument = () => {
           </Button>
         </div>
       </form>
-    </CreatDocumentModal>
+    </Modal>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { GetDocumentModal } from "@/widgets";
+import { GetDocumentModal } from "@/widgets/getDocumentModal/getDocumentModal";
 import { IDocument } from "@/shared/types";
 import { useDispatch } from "react-redux";
 import {
@@ -17,7 +17,6 @@ interface Props {
 export const Document = ({ children, data }: Props) => {
   const [openModal, setIsOpenModal] = useState(false);
   const dispatch = useDispatch();
-  console.log(openModal, "openModal");
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -28,7 +27,7 @@ export const Document = ({ children, data }: Props) => {
     setIsOpenModal(false);
     dispatch(hiddenBackdrop());
   };
-  
+
   return (
     <>
       <div
