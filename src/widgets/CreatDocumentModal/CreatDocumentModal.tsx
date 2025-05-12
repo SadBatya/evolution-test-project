@@ -6,6 +6,7 @@ import { closeModal } from "@/entities/store/modalSlice";
 import { RootState } from "@/entities/store/store";
 import closeIcon from "./assets/close.svg";
 import Image from "next/image";
+import { hiddenBackdrop } from "@/entities/store/backdropSlice";
 
 export const CreatDocumentModal = ({
   children,
@@ -14,6 +15,11 @@ export const CreatDocumentModal = ({
 }) => {
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
   const dispatch = useDispatch();
+
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+    dispatch(hiddenBackdrop());
+  };
 
   return (
     <nav
@@ -24,7 +30,7 @@ export const CreatDocumentModal = ({
     >
       <div className="relative text-black h-full flex flex-col">
         <button
-          onClick={() => dispatch(closeModal())}
+          onClick={handleCloseModal}
           className="absolute top-6 right-6 cursor-pointer"
         >
           <Image src={closeIcon} alt="close button" />

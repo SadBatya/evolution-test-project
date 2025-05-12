@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import closeIcon from "./assets/close.svg";
 import Image from "next/image";
-import { Button, TypeDocument } from "@/shared/ui";
+import { TypeDocument } from "@/shared/ui";
 import dataFlowIcon from "./assets/dataflow.svg";
 import statusIcon from "./assets/status.svg";
 import descriptionIcon from "./assets/description.svg";
@@ -22,7 +22,7 @@ export const GetDocumentModal = ({ data, isOpen, onClick }: Props) => {
         isOpen && "translate-x-0"
       )}
     >
-      <div className="relative text-black h-full flex flex-col">
+      <div className="relative text-black flex flex-col">
         <button
           onClick={onClick}
           className="absolute top-6 right-6 cursor-pointer"
@@ -30,13 +30,13 @@ export const GetDocumentModal = ({ data, isOpen, onClick }: Props) => {
           <Image src={closeIcon} alt="close button" />
         </button>
       </div>
-      <div className="flex border-b-[1px] border-[#E9EAEB] py-5 px-4 gap-1.5 text-[14px] items-center">
+      <div className="flex border-b-[1px] text-black border-[#E9EAEB] py-5 px-4 gap-1.5 text-[14px] items-center">
         <Image src={dataFlowIcon} alt="create document icon" />
         <span>Документы</span>
         <span className="w-[1px] h-[14px] opacity-50 block bg-black" />
         <span className="opacity-50">Создание документа</span>
       </div>
-      <form className="flex flex-col h-full">
+      <form className="flex flex-col text-black justify-between">
         <div className="p-6">
           <input
             defaultValue={data?.title}
@@ -61,14 +61,6 @@ export const GetDocumentModal = ({ data, isOpen, onClick }: Props) => {
               className="border border-[#D5D7DA] min-h-[108px] w-full rounded-sm resize-none px-3 py-2"
             ></textarea>
           </div>
-        </div>
-        <div
-          style={{ boxShadow: "0 -2px 16px 0px rgba(97, 97, 97, 0.05)" }}
-          className="mt-auto border-t border-[#EAECF0] shadow-md mb-0 py-4 px-6 flex justify-end"
-        >
-          <Button onClick={onClick} className="text-white bg-red-950 px-4 py-2">
-            Закрыть
-          </Button>
         </div>
       </form>
     </nav>

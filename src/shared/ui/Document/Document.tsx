@@ -4,7 +4,10 @@ import { useState } from "react";
 import { GetDocumentModal } from "@/widgets";
 import { IDocument } from "@/shared/types";
 import { useDispatch } from "react-redux";
-import { visibleBackdrop } from "@/entities/store/backdropSlice";
+import {
+  hiddenBackdrop,
+  visibleBackdrop,
+} from "@/entities/store/backdropSlice";
 
 interface Props {
   data?: IDocument;
@@ -20,6 +23,12 @@ export const Document = ({ children, data }: Props) => {
     setIsOpenModal(true);
     dispatch(visibleBackdrop());
   };
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+    dispatch(hiddenBackdrop());
+  };
+  
   return (
     <>
       <div
@@ -31,7 +40,7 @@ export const Document = ({ children, data }: Props) => {
       <GetDocumentModal
         data={data}
         isOpen={openModal}
-        onClick={() => setIsOpenModal(false)}
+        onClick={handleCloseModal}
       />
     </>
   );

@@ -18,14 +18,14 @@ export const TypeDocument = ({ type }: Props) => {
     }
   } else {
     if (type === 1) {
-      typeText = "Тип 1";
-      additionalStyles = "text-[#FF6347] bg-[#FFE4E1] border-[#FFB6C1]";
+      typeText = "Регламент";
+      additionalStyles = "bg-[#EFF8FF] text-[#175CD3] border-[#B2DDFF]";
     } else if (type === 2) {
-      typeText = "Тип 2";
-      additionalStyles = "text-[#FFD700] bg-[#FFFACD] border-[#FFECB3]";
+      typeText = "Инструкция";
+      additionalStyles = "text-[#17D36F] bg-[#EFFFF1] border-[#CAFED8]";
     } else if (type === 3) {
-      typeText = "Тип 3";
-      additionalStyles = "text-[#32CD32] bg-[#F0FFF0] border-[#98FB98]";
+      typeText = "Распоряжение";
+      additionalStyles = "text-[#B42318] border-[#FECDCA] bg-[#FEF3F2]";
     }
   }
 
