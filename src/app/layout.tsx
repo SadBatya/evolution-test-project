@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header, Navigation } from "@/widgets";
 import { Providers } from "@/widgets/Providers/Providers";
 import { CreateDocument } from "@/entities/createDocument/createDocument";
 import { Backdrop } from "@/shared/ui";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -29,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative overflow-hidden`}
+        className={`${inter.variable} antialiased relative overflow-hidden`}
       >
         <Providers>
           <Header />
