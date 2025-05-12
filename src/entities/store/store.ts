@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { modalSlice } from "./modalSlice";
+import { apiSlice } from "./apiSlice";
 
 export const store = configureStore({
   reducer: {
     modal: modalSlice.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
