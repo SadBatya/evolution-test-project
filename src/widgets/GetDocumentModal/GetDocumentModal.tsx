@@ -1,12 +1,13 @@
-import Image from "next/image";
-import { TypeDocument } from "@/shared/ui";
-import dataFlowIcon from "./assets/dataflow.svg";
-import statusIcon from "./assets/status.svg";
-import descriptionIcon from "./assets/description.svg";
-import { IDocument } from "@/shared/types";
-import { Modal } from "@/shared/ui";
-import { useClickAway } from "react-use";
-import { useRef } from "react";
+'use client';
+import Image from 'next/image';
+import { TypeDocument } from '@/shared/ui';
+import dataFlowIcon from './assets/dataflow.svg';
+import statusIcon from './assets/status.svg';
+import descriptionIcon from './assets/description.svg';
+import { IDocument } from '@/shared/types';
+import { Modal } from '@/shared/ui';
+import { useClickAway } from 'react-use';
+import { useRef } from 'react';
 
 interface Props {
   data: IDocument | undefined;
